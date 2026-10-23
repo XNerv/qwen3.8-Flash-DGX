@@ -41,9 +41,6 @@ docker pull ghcr.io/xnerv/qwen3.8-flash-next-gb10-vllm:latest
 | `sha-<short>` | every push to `main` | pinning to an exact commit |
 | `v*` (e.g. `v1.0.0`) | a `v*` git tag is pushed | a fixed release |
 
-Pulling needs no login once the package visibility is set to public. That is a one-time step in the
-GitHub package settings after the first successful build.
-
 ## TL;DR — run it on a DGX Spark
 
 ```bash
