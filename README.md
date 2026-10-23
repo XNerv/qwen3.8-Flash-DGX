@@ -3,8 +3,8 @@
 > **Fork notice.** This repository is a fork of
 > [blazux/qwen3.8-Flash-DGX](https://github.com/blazux/qwen3.8-Flash-DGX), the upstream recipe.
 > This fork's purpose is to publish the patched vLLM image as a versioned artifact on GitHub
-> Container Registry (`ghcr.io/xnerv/qwen38-flash-dgx`). A GitHub Actions workflow
-> ([`.github/workflows/docker.yml`](.github/workflows/docker.yml)) builds it for `linux/arm64`
+> Container Registry (`ghcr.io/xnerv/qwen3.8-flash-next-gb10-vllm`). A GitHub Actions workflow
+> ([`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml)) builds it for `linux/arm64`
 > on every push to `main` and on every `v*` tag. Use upstream for the full project history and
 > discussion; use this fork when you want a prebuilt image.
 
@@ -32,7 +32,7 @@ CI publishes the image to GitHub Container Registry. It targets `linux/arm64` on
 DGX Spark / GB10 or another arm64 host with the NVIDIA container runtime.
 
 ```bash
-docker pull ghcr.io/xnerv/qwen38-flash-dgx:latest
+docker pull ghcr.io/xnerv/qwen3.8-flash-next-gb10-vllm:latest
 ```
 
 | Tag | Published when | Use it for |
