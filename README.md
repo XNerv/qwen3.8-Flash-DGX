@@ -1,5 +1,13 @@
 # Qwen3.8-Flash-Next on a single DGX Spark (GB10)
 
+> **Fork notice.** This repository is a fork of
+> [blazux/qwen3.8-Flash-DGX](https://github.com/blazux/qwen3.8-Flash-DGX), the upstream recipe.
+> This fork's purpose is to publish the patched vLLM image as a versioned artifact on GitHub
+> Container Registry (`ghcr.io/xnerv/qwen38-flash-dgx`). A GitHub Actions workflow
+> ([`.github/workflows/docker.yml`](.github/workflows/docker.yml)) builds it for `linux/arm64`
+> on every push to `main` and on every `v*` tag. Use upstream for the full project history and
+> discussion; use this fork when you want a prebuilt image.
+
 Run **Qwen3.8-Flash-Next** — a ~176B-parameter model (125B main + 51B n-gram, 6B
 active) — on **one NVIDIA DGX Spark / ASUS GX10** with **vLLM**, at full prefill
 speed, with MTP speculative decoding, **working prefix caching**, **deterministic
@@ -18,10 +26,28 @@ on every cache hit) and **non-deterministic top-k in the sparse attention** (a G
 kernel that drops candidates) — and offers an optional **hybrid** checkpoint layout
 (NVFP4 experts + fp8 side layers) that decodes ~20% faster at the same quality.
 
+## Prebuilt image
+
+CI publishes the image to GitHub Container Registry. It targets `linux/arm64` only, so it runs on a
+DGX Spark / GB10 or another arm64 host with the NVIDIA container runtime.
+
+```bash
+docker pull ghcr.io/xnerv/qwen38-flash-dgx:latest
+```
+
+| Tag | Published when | Use it for |
+|-----|----------------|------------|
+| `latest` | every push to `main` | the newest build |
+| `sha-<short>` | every push to `main` | pinning to an exact commit |
+| `v*` (e.g. `v1.0.0`) | a `v*` git tag is pushed | a fixed release |
+
+Pulling needs no login once the package visibility is set to public. That is a one-time step in the
+GitHub package settings after the first successful build.
+
 ## TL;DR — run it on a DGX Spark
 
 ```bash
-git clone https://github.com/blazux/qwen3.8-Flash-DGX.git && cd qwen3.8-Flash-DGX
+git clone https://github.com/XNerv/qwen3.8-Flash-DGX.git && cd qwen3.8-Flash-DGX
 ./flash doctor      # docker, GPU, memory, disk, port, image, weights: tells you what is missing
 ./flash setup       # builds the image, downloads the checkpoint (NVIDIA's NVFP4, 124 GiB via Xet, resumable), prepares the hybrid layout
 ./flash serve       # the recommended recipe (profile "default"): hybrid, 500k context, deterministic
